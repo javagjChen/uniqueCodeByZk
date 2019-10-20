@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * Created with IntelliJ IDEA.
  * User: chengj
  * Date: 2019-10-20
- * Description: No Description
+ * Description: curator配置
  */
 @Configuration
 @ConfigurationProperties(prefix = "curator")
