@@ -1,0 +1,6 @@
+curator:
+  connectionTimeoutMs: 5000  # 连接超时时间
+  elapsedTimeMs: 5000   #重试间隔时间
+  retryCount: 3  #重试次数
+  sessionTimeoutMs: 60000  # session超时时间
+  connectString: 127.0.0.1:2181   # zookeeper 地址
