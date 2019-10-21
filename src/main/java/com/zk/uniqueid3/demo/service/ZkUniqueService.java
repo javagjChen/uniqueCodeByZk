@@ -28,13 +28,13 @@ public class ZkUniqueService {
 
     String serialNumber = "";
     try {
-        //获得锁
-        //通过创建临时顺序节点获取序列号
-        serialNumber = create(curatorFramework,moduleCode);
-        serialNumber = StringUtils.substringAfterLast(serialNumber,moduleCode);
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("yyMMdd");
-        LocalDate date = LocalDate.now();
+        LocalDate date = LocalDate.now().minusDays(1);
         String dateString = date.format(formatters);
+        //通过创建临时顺序节点获取序列号
+        serialNumber = create(curatorFramework,moduleCode,dateString);
+        serialNumber = StringUtils.substringAfterLast(serialNumber,moduleCode);
+
 
 
         //2.拼接流水号（前缀+日期+流水号）返回
@@ -53,15 +53,17 @@ public class ZkUniqueService {
 
     /**
      *
+     *
+     * @param dateString
      * @param moduleCode
      * @throws Exception
      */
-    public String create(CuratorFramework curatorFramework, String moduleCode) throws Exception {
+    public String create(CuratorFramework curatorFramework, String moduleCode, String dateString) throws Exception {
 
 
         return curatorFramework.create().creatingParentsIfNeeded()
                 .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
-                .forPath("/" + moduleCode + "/" + moduleCode);
+                .forPath("/" + moduleCode + "/" + dateString + "/" + moduleCode);
 
     }
 
